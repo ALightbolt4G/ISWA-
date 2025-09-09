@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #2c3e50;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* الشريط العلوي */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.header-buttons button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.header-buttons button:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* قسم الإضافة */
+.transaction-section {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-section h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group label {
+    width: 100px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.btn-primary {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: #219a52;
+}
+
+/* قسم التقارير */
+.report-section {
+    padding: 20px;
+}
+
+.report-section h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-secondary {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #2980b9;
+}
+
+.report-summary {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-right: 4px solid #3498db;
+}
+
+/* الجدول */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #34495e;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+}
+
+.balance-negative {
+    background-color: #ffcccc !important;
+    font-weight: bold;
+}
+
+.balance-low {
+    background-color: #ffffcc !important;
+}
+
+/* شريط الحالة */
+.status-bar {
+    background: #34495e;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// تبديل الوضع الليلي
+function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    document.body.classList.toggle('dark-mode', isDarkMode);
+    
+    const button = document.getElementById('darkModeBtn');
+    button.textContent = isDarkMode ? 'الوضع النهاري' : 'الوضع الليلي';
+    button.style.background = isDarkMode ? '#f39c12' : '#34495e';
+    button.style.color = 'white';
+    
+    // تطبيق الألوان على جميع العناصر
+    applyDarkModeStyles(isDarkMode);
+    
+    // حفظ الإعدادات
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+// تطبيق أنماط الوضع الليلي على جميع العناصر
+function applyDarkModeStyles(isDark) {
+    const elementsToStyle = [
+        '.container',
+        '.transaction-section',
+        '.report-section',
+        '.header',
+        '.status-bar',
+        'table',
+        'th',
+        'tr',
+        'td'
+    ];
+    
+    const styles = document.getElementById('dark-mode-styles');
+    if (!styles) {
+        const styleElement = document.createElement('style');
+        styleElement.id = 'dark-mode-styles';
+        document.head.appendChild(styleElement);
+    }
+    
+    if (isDark) {
+        document.getElementById('dark-mode-styles').textContent = `
+            .dark-mode .container {
+                background: #2c3e50 !important;
+                color: #ecf0f1 !important;
+            }
+            .dark-mode .transaction-section,
+            .dark-mode .report-section {
+                background: #34495e !important;
+                color: #ecf0f1 !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode .header {
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+            }
+            .dark-mode .status-bar {
+                background: #2c3e50 !important;
+                color: #ecf0f1 !important;
+            }
+            .dark-mode table {
+                background: #34495e !important;
+                color: #ecf0f1 !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode th {
+                background: #2c3e50 !important;
+                color: #ecf0f1 !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode tr {
+                background: #3b4f63 !important;
+                color: #ecf0f1 !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode tr:nth-child(even) {
+                background: #34495e !important;
+            }
+            .dark-mode tr:hover {
+                background: #4a6278 !important;
+            }
+            .dark-mode td {
+                background: inherit !important;
+                color: inherit !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode .form-group input,
+            .dark-mode .form-group select,
+            .dark-mode .filter-group input {
+                background: #2c3e50 !important;
+                color: #ecf0f1 !important;
+                border-color: #4a6278 !important;
+            }
+            .dark-mode .report-summary {
+                background: #3b4f63 !important;
+                color: #ecf0f1 !important;
+                border-color: #3498db !important;
+            }
+        `;
+    } else {
+        document.getElementById('dark-mode-styles').textContent = '';
+    }
+}
+
+// تحميل الإعدادات
+function loadSettings() {
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        isDarkMode = true;
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeBtn').textContent = 'الوضع النهاري';
+        document.getElementById('darkModeBtn').style.background = '#f39c12';
+        document.getElementById('darkModeBtn').style.color = 'white';
+        applyDarkModeStyles(true);
+    }
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header-buttons {
+        margin-top: 10px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .form-group label {
+        width: auto;
+        margin-bottom: 5px;
+    }
+    
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
