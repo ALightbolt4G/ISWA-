@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المخزون - رسلان</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- الشريط العلوي -->
+        <header class="header">
+            <h1>نظام إدارة المخزون - رسلان</h1>
+            <div class="header-buttons">
+                <button id="darkModeBtn">الوضع الليلي</button>
+                <button id="exportBtn">تصدير البيانات</button>
+                <button id="importBtn">استيراد البيانات</button>
+            </div>
+        </header>
+
+        <!-- قسم إضافة المعاملات -->
+        <section class="transaction-section">
+            <h2>إضافة معاملة جديدة</h2>
+            <div class="form-group">
+                <label for="itemName">اسم الصنف:</label>
+                <input type="text" id="itemName" list="itemsList">
+                <datalist id="itemsList"></datalist>
+            </div>
+            <div class="form-group">
+                <label for="transactionType">نوع العملية:</label>
+                <select id="transactionType">
+                    <option value="supply">توريد</option>
+                    <option value="consume">استهلاك</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">الكمية:</label>
+                <input type="number" id="quantity" min="1" value="1">
+            </div>
+            <button id="addTransactionBtn" class="btn-primary">إضافة المعاملة</button>
+        </section>
+
+        <!-- قسم التقارير -->
+        <section class="report-section">
+            <h2>التقارير</h2>
+            <div class="filter-group">
+                <label for="startDate">من تاريخ:</label>
+                <input type="date" id="startDate">
+                <label for="endDate">إلى تاريخ:</label>
+                <input type="date" id="endDate">
+                <button id="generateReportBtn" class="btn-secondary">توليد التقرير</button>
+            </div>
+            
+            <div id="reportSummary" class="report-summary"></div>
+            
+            <div class="table-container">
+                <table id="reportTable">
+                    <thead>
+                        <tr>
+                            <th>اسم الصنف</th>
+                            <th>الموردات</th>
+                            <th>المستهلك</th>
+                            <th>الرصيد</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- حالة النظام -->
+        <footer class="status-bar">
+            <span id="statusText">جاهز - متصل بقاعدة البيانات</span>
+            <span id="memoryUsage">الذاكرة: ~5 MB</span>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
